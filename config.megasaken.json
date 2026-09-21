@@ -1,0 +1,158 @@
+{
+  "_comment": "Конфиг зеркала MegaSaken. Ключи, начинающиеся с _, игнорируются скриптом.",
+  "source_url": "https://raw.githubusercontent.com/jeevacation780/repository-for-kings/refs/heads/main/cat.lua",
+  "source_repo": "jeevacation780/repository-for-kings",
+  "source_path": "cat.lua",
+  "src_name": "catsaken",
+  "dst_name": "skidsaken",
+  "target_repo": "test1237423234-stack/MegaSaken",
+  "target_branch": "main",
+  "target_file": "Script",
+  "workdir": ".mirror-work",
+  "state": ".mirror-state.json",
+  "interval": 900,
+  "attribution": false,
+  "_attribution_comment": "false = не добавлять шапку со ссылкой на оригинал (как у тебя сейчас). Если включишь - в начало файла добавится комментарий с ссылкой на апстрим.",
+  "telemetry_url": "https://example.invalid/",
+  "_telemetry_comment": "Оригинал шлёт кики и фидбек на воркеры chieokure.workers.dev. example.invalid - гарантированно мёртвый домен, т.е. телеметрия выключается. Если поднимешь свой воркер - впиши его URL.",
+  "assets": [
+    {
+      "name": "rayfield",
+      "url": "https://raw.githubusercontent.com/aibabylaugh/catsaken/refs/heads/main/rayfield.lua",
+      "to": "rayfield",
+      "_comment": "свежая версия UI-библиотеки -> твой файл 'rayfield'"
+    },
+    {
+      "name": "drawing",
+      "url": "https://raw.githubusercontent.com/aibabylaugh/catsaken/refs/heads/main/drawing.lua",
+      "to": "drawing-lib",
+      "_comment": "-> твой файл 'drawing-lib' (сейчас он байт-в-байт как в апстриме)"
+    },
+    {
+      "name": "translations",
+      "url": "https://raw.githubusercontent.com/aibabylaugh/catsaken/refs/heads/main/translations.lua",
+      "to": "translations.lua",
+      "_comment": "переводы интерфейса (4 КБ). У тебя их нет - скрипт их скачает и будет брать из твоего репо"
+    }
+  ],
+  "patches": [
+    {
+      "name": "миграция старых конфигов catsaken -> skidsaken",
+      "type": "insert_before",
+      "anchor": "if isfile('skidsakenconfigs.json') and not isfile(\"skidsakenconfigfix.txt\") then",
+      "text": "do\n    if not isfile('skidsaken_migration_done.txt') then\n        pcall(function()\n            local Http = game:GetService('HttpService')\n            if isfile('catsakenconfigs.json') then\n                local s, oldcfg = pcall(function() return Http:JSONDecode(readfile('catsakenconfigs.json')) end)\n                if s and type(oldcfg) == 'table' then\n                    local newcfg = {}\n                    local sn, d = pcall(function() return Http:JSONDecode(readfile('skidsakenconfigs.json')) end)\n                    if sn and type(d) == 'table' then newcfg = d end\n                    for k, v in pairs(oldcfg) do\n                        if newcfg[k] == nil then newcfg[k] = v end\n                    end\n                    writefile('skidsakenconfigs.json', Http:JSONEncode(newcfg))\n                end\n                delfile('catsakenconfigs.json')\n            end\n            if isfile('catsakenautoload.txt') then\n                writefile('skidsakenautoload.txt', readfile('catsakenautoload.txt'))\n                delfile('catsakenautoload.txt')\n            end\n            if isfile('BOOL_CATSAKEN_OLDUI') then\n                writefile('BOOL_SKIDSAKEN_OLDUI', readfile('BOOL_CATSAKEN_OLDUI'))\n                delfile('BOOL_CATSAKEN_OLDUI')\n            end\n            local function movefolder(from, to)\n                if not isfolder(from) then return end\n                if not isfolder(to) then makefolder(to) end\n                for _, p in pairs(listfiles(from)) do\n                    local name = p:match('[^/\\\\]+$') or p\n                    pcall(function()\n                        writefile(to .. '/' .. name, readfile(from .. '/' .. name))\n                        delfile(from .. '/' .. name)\n                    end)\n                end\n                pcall(delfile, from)\n            end\n            movefolder('Catsaken', 'Skidsaken')\n            movefolder('CatsakenRemastered', 'SkidsakenRemastered')\n            writefile('skidsaken_migration_done.txt', '')\n        end)\n    end\nend\n\n",
+      "required": true,
+      "_comment": "Твой ручной блок: переносит старые конфиги/автолоад/папки, чтобы у юзеров не пропали настройки.",
+      "expect": 1
+    },
+    {
+      "name": "Discord: инвайт gAk7pm2RVy",
+      "type": "replace",
+      "from": "rmneruazd",
+      "to": "gAk7pm2RVy",
+      "required": true,
+      "_comment": "label в About, запрос api/v6/invite и кнопка Copy invite - всё разом",
+      "expect": 3
+    },
+    {
+      "name": "кнопка Reload -> твой Script (а не обфусцированный скрипт оригинала)",
+      "type": "replace",
+      "from": "https://raw.githubusercontent.com/aibabylaugh/catsaken-real-script-not-assets/refs/heads/main/obfuscated-1448974601077002340.lua",
+      "to": "https://raw.githubusercontent.com/test1237423234-stack/MegaSaken/refs/heads/main/Script",
+      "required": true,
+      "_comment": "ВАЖНО: без этого патча кнопка Reload и авто-обновление качают и запускают ОРИГИНАЛЬНЫЙ обфусцированный catsaken от автора - вся твоя айдентика и правки исчезают.",
+      "expect": 2
+    },
+    {
+      "name": "дата создания Discord-сервера",
+      "type": "regex",
+      "pattern": "local servercreatedate = \\d+",
+      "to": "local servercreatedate = 1762017503",
+      "_comment": "01.11.2025 - реальная дата создания CursedHub. Хочешь '7-8 месяцев назад', поставь 1771624819 (7 мес) или 1769032819 (8 мес)."
+    },
+    {
+      "name": "логотип вместо catsaken1/2.png",
+      "type": "regex",
+      "pattern": "https://github\\.com/aibabylaugh/catsaken/raw/main/catsaken[12]\\.png",
+      "to": "https://github.com/test1237423234-stack/MegaSaken/raw/main/Skidsakenlogo.png",
+      "requires_file": "Skidsakenlogo.png",
+      "_comment": "если файла нет в репозитории - патч пропустится и картинка останется с репозитория автора (лучше, чем 404)"
+    },
+    {
+      "name": "фон меню -> SkidsakenBackground.png",
+      "type": "replace",
+      "from": "https://github.com/aibabylaugh/catsaken/raw/main/patterns.jpg",
+      "to": "https://github.com/test1237423234-stack/MegaSaken/raw/main/SkidsakenBackground.png",
+      "requires_file": "SkidsakenBackground.png",
+      "_comment": "то же: без файла в репозитории используется картинка автора"
+    },
+    {
+      "name": "rayfield.lua -> свой файл",
+      "type": "replace",
+      "from": "https://raw.githubusercontent.com/aibabylaugh/catsaken/refs/heads/main/rayfield.lua",
+      "to": "https://raw.githubusercontent.com/test1237423234-stack/MegaSaken/refs/heads/main/rayfield",
+      "requires_file": "rayfield"
+    },
+    {
+      "name": "drawing.lua -> свой файл",
+      "type": "replace",
+      "from": "https://raw.githubusercontent.com/aibabylaugh/catsaken/refs/heads/main/drawing.lua",
+      "to": "https://raw.githubusercontent.com/test1237423234-stack/MegaSaken/refs/heads/main/drawing-lib",
+      "requires_file": "drawing-lib"
+    },
+    {
+      "name": "translations.lua -> свой файл",
+      "type": "replace",
+      "from": "https://raw.githubusercontent.com/aibabylaugh/catsaken/refs/heads/main/translations.lua",
+      "to": "https://raw.githubusercontent.com/test1237423234-stack/MegaSaken/refs/heads/main/translations.lua",
+      "requires_file": "translations.lua"
+    },
+    {
+      "name": "свой номер версии в меню",
+      "type": "regex",
+      "pattern": "Name = 'Skidsaken Remastered \\[V[0-9.]+\\]'",
+      "to": "Name = 'Skidsaken [V0.8]'",
+      "expect": 1,
+      "required": false,
+      "enabled": true,
+      "_comment": "regex, а не точная строка: когда апстрим поднимет версию (V3.3 и т.д.), патч продолжит работать"
+    },
+    {
+      "name": "свой заголовок загрузки",
+      "type": "regex",
+      "pattern": "LoadingTitle = 'Skidsaken Remastered'",
+      "to": "LoadingTitle = 'Skidsaken By Claude Code'",
+      "expect": 1,
+      "required": false,
+      "enabled": true
+    },
+    {
+      "_comment_only": true,
+      "_comment": "=== ниже патчи, выключенные по умолчанию: включи, если захочешь ==="
+    },
+    {
+      "name": "авто-апдейтер: следить за своим Script вместо апстрима",
+      "type": "replace",
+      "from": "https://raw.githubusercontent.com/jeevacation780/repository-for-kings/refs/heads/main/cat.lua",
+      "to": "https://raw.githubusercontent.com/test1237423234-stack/MegaSaken/refs/heads/main/Script",
+      "enabled": false,
+      "_comment": "Выключено как у тебя сейчас: скрипт следит за апстримом и предлагает перезагрузиться. Включи, если хочешь, чтобы юзеры видели только твои обновления (тогда они узнают об апдейте после того, как зеркало запушит твою версию)."
+    },
+    {
+      "name": "пак иконок (app-window/ghost/shield/wifi) -> свой репо",
+      "type": "replace",
+      "from": "https://github.com/aibabylaugh/catsaken/raw/main/",
+      "to": "https://github.com/test1237423234-stack/MegaSaken/raw/main/",
+      "enabled": false,
+      "_comment": "Включи, если зальёшь эти 5 png в корень MegaSaken: app-window.png, ghost.png, shield.png, wifi.png, wifi-off.png"
+    },
+    {
+      "name": "списки lms/lobby -> свой репо",
+      "type": "regex",
+      "pattern": "https://api\\.github\\.com/repos/aibabylaugh/catsaken/contents/(lms|lobby)",
+      "to": "https://api.github.com/repos/test1237423234-stack/MegaSaken/contents/\\1",
+      "enabled": false,
+      "_comment": "Включи ТОЛЬКО если реально перенесёшь mp3 (это ~250 МБ): обычный git-репозиторий GitHub такое не переварит, нужен Cloudflare R2 / S3 или релиз-ассеты"
+    }
+  ]
+}
