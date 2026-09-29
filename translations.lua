@@ -12,6 +12,19 @@ return {
         ['zh-tw'] = '使用小號或務必小心。<font color="rgb(186, 52, 52)">絕對不要在主帳號上啟用明顯的功能，否則你一定會被封禁。</font>',
     },
 
+    WARNING_2 = {
+        ['en-us'] = 'Just because a feature is not marked as blatant does not automatically mean it\'s safe to use. Enable every feature with maximum caution.',
+        ['es-es'] = 'El hecho de que una función no esté marcada como descarada no significa automáticamente que sea segura de usar. Activa todas las funciones con la máxima precaución.',
+        ['fr-fr'] = 'Ce n’est pas parce qu’une fonctionnalité n’est pas marquée comme flagrante qu’elle est automatiquement sûre à utiliser. Activez chaque fonctionnalité avec la plus grande prudence.',
+        ['de-de'] = 'Nur weil eine Funktion nicht als auffällig gekennzeichnet ist, bedeutet das nicht automatisch, dass sie sicher zu verwenden ist. Aktiviere jede Funktion mit äußerster Vorsicht.',
+        ['it-it'] = 'Il fatto che una funzionalità non sia contrassegnata come evidente non significa automaticamente che sia sicura da usare. Attiva ogni funzionalità con la massima cautela.',
+        ['pt-br'] = 'Só porque um recurso não está marcado como óbvio, isso não significa automaticamente que seja seguro usá-lo. Ative todos os recursos com o máximo de cuidado.',
+        ['ja-jp'] = '機能が露骨なものとして表示されていないからといって、安全に使用できるとは限りません。すべての機能を最大限注意して有効にしてください。',
+        ['ko-kr'] = '기능이 대놓고 사용하는 기능으로 표시되어 있지 않다고 해서 안전하게 사용할 수 있다는 의미는 아닙니다. 모든 기능을 최대한 주의해서 활성화하세요.',
+        ['zh-cn'] = '某项功能没有被标记为明显功能，并不意味着使用它就是安全的。启用任何功能时都务必保持最大程度的谨慎。',
+        ['zh-tw'] = '某項功能沒有被標記為明顯功能，並不代表使用它就是安全的。啟用任何功能時都務必保持最大程度的謹慎。',
+    },
+
     FEATURES_INFO = {
         ['en-us'] = 'There are no paid features or keyed features in this script. If you can\'t enable a feature, go to the miscellaneous tab and find Blatant Mode and then enable it.',
         ['es-es'] = 'No hay funciones de pago ni funciones con clave en este script. Si no puedes activar una función, ve a la pestaña de miscelánea, busca Blatant Mode y actívalo.',
