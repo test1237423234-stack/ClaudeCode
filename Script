@@ -10475,7 +10475,7 @@ xpcall(function()
     if _G.UNLOCK_TP_ALL or not LPH_OBFUSCATED then
         MapTab:CreateButton({
             Name = 'Loop Random TP all players',
-            ToolTip = 'An exploit that causes the entire round to get stuck with everyone teleporting into random positions. It also works when you are dead. <b>Requires atleast one item to be on the map to work</b>',
+            ToolTip = 'Theres no benefit, it strictly requries a specific item, and doesnt work in LMS. Its essentially useless, but its here anyway',
             Callback = function()
                 -- Ty curedsaken for improving my tp all! turns out we are best friends <3
                 local targetNames = {
