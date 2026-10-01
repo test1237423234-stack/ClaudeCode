@@ -4576,8 +4576,6 @@ xpcall(function()
     end
 
     local AboutTab = Skidsaken:CreateTab('About', 'info')
-    --AboutTab:CreateSection('About Skidsaken Remastered')
-    --AboutTab:CreateLabel('Skidsaken Remastered is a branch of Skidsaken. We don\'t use any code from skidsaken, we are an unofficial recontinuation of the popular script skidsaken. Skidsaken Remastered is FREE/KEYLESS and always will be. Developed on new year\'s eve by two developers who one also worked for Voidsaken.')
     AboutTab:CreateSection('Contact')
     AboutTab:CreateLabel("discord.gg/gAk7pm2RVy")
     local servercreatedate = 1762017503
