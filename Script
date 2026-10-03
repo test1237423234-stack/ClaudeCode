@@ -10473,7 +10473,7 @@ xpcall(function()
     if _G.UNLOCK_TP_ALL or not LPH_OBFUSCATED then
         MapTab:CreateButton({
             Name = 'Loop Random TP all players',
-            ToolTip = 'Theres no benefit, it strictly requries a specific item, and doesnt work in LMS. Its essentially useless, but its here anyway',
+            ToolTip = 'Theres no benefit.\nit strictly requries a specific item (<b>Dropped</b> Medkit or any bloxy cola. Its essentially useless, but its here anyway',
             Callback = function()
                 -- Ty curedsaken for improving my tp all! turns out we are best friends <3
                 local targetNames = {

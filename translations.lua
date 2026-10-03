@@ -246,6 +246,19 @@ return {
             ['zh-cn'] = '音频',
             ['zh-tw'] = '音訊',
         },
+
+        ['Animations'] = {
+            ['en-us'] = 'Animations',
+            ['es-es'] = 'Animaciones',
+            ['fr-fr'] = 'Animations',
+            ['de-de'] = 'Animationen',
+            ['it-it'] = 'Animazioni',
+            ['pt-br'] = 'Animações',
+            ['ja-jp'] = 'アニメーション',
+            ['ko-kr'] = '애니메이션',
+            ['zh-cn'] = '动画',
+            ['zh-tw'] = '動畫',
+        },
         
         ['Configs'] = {
             ['en-us'] = 'Configs',
