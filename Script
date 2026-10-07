@@ -12829,7 +12829,7 @@ xpcall(function()
             Forsaken.CurrentLms = Sound
             Changelms()
         end
-        if (Sound.Name == 'spectreOutside' and Skidsaken.Flags.LobbyThemeChanger.CurrentValue) then
+        if ((Sound.Name == 'spectreOutside' or Sound.Name == 'deathLobby') and Skidsaken.Flags.LobbyMusicChanger.CurrentValue) then
             Forsaken.CurrentLobbyMusic = Sound
             Changelobbymusic()
         end
